@@ -7,10 +7,8 @@
 		<p>{{ post.text|linebreaksbr }}</p>
 		<div class="date">
 			<p>
-
-			{% if post.published_date %}
-				公開日：{{post.published_date}}
-			{% else %}
+				作成日：{{post.created_date}}</p>
+			{% if post.is_public == False %}
 				<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
 			{% endif %}
 			<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>

@@ -14,5 +14,5 @@ def render_category_links():
 @register.inclusion_tag('thread/tags/month_list.html')
 def render_month_links():
 	return{
-	'month_list': Post.objects.filter(is_public=True,created_date__lte=timezone.now()).dates('published_date', 'month', order='DESC'),
+	'month_list': Post.objects.filter(is_public=True,created_date__lte=timezone.now()).dates('created_date', 'month', order='DESC'),
 	}
