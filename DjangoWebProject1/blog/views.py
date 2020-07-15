@@ -21,9 +21,9 @@ class Post_List(ListView):
     def get_queryset(self):
         q_word = self.request.GET.get('query')
         if q_word:
-            object_list = Post.objects.filter(published_date__lte=timezone.now()).filter(Q(title__icontains=q_word) | Q(text__icontains=q_word)).order_by('published_date').reverse()
+            object_list = Post.objects.filter(is_public=True,created_date__lte=timezone.now()).filter(Q(title__icontains=q_word) | Q(text__icontains=q_word)).order_by('published_date').reverse()
         else:
-            object_list =Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+            object_list =Post.objects.filter(is_public=True,published_date__lte=timezone.now()).order_by('published_date').reverse()
         return object_list
 
 #def post_detail(request, pk):
@@ -41,7 +41,11 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            if 'publish' in request.POST:
+                post.published_date = timezone.now()
+                post.is_public = True
+            elif 'draft' in request.POST:
+                post.is_public = False
             post.save()
             return redirect('post_detail',pk=post.pk)
     else:
@@ -56,7 +60,11 @@ def post_edit(request,pk) :
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            if 'publish' in request.POST:
+                post.published_date = timezone.now()
+                post.is_public = True
+            elif 'draft' in request.POST:
+                post.is_public = False
             post.save()
             return redirect('post_detail',pk=post.pk)
     else:
@@ -65,7 +73,7 @@ def post_edit(request,pk) :
 
 @login_required
 def post_draft_list(request):
-    posts = Post.objects.filter(published_date__isnull = True).order_by('created_date')
+    posts = Post.objects.filter(is_public = False).order_by('created_date')
     return render(request,'blog/post_draft_list.html',{'posts':posts})
 
 @login_required
@@ -108,7 +116,7 @@ def comment_remove(request,pk):
 
 def category_list(request,pk):
     category = get_object_or_404(Category,pk=pk)
-    posts =  Post.objects.filter(category=category,published_date__lte=timezone.now()).order_by('published_date').reverse()
+    posts =  Post.objects.filter(category=category,created_date__lte=timezone.now(),is_public=True).order_by('published_date').reverse()
     return render(request, 'blog/post_list.html', {'posts':posts}) 
 
 #class Category_List(ListView):

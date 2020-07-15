@@ -23,7 +23,7 @@ def set_default_category():
 
 class PostManager(models.Manager):
     def published(self):
-        self.get_queryset().filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+        self.get_queryset().filter(is_public=True,created_date__lte=timezone.now()).order_by('published_date').reverse()
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -33,12 +33,12 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    
+    is_public = models.BooleanField(default=False)
 
     objects = PostManager()
 
     def publish(self):
-        self.published_date = timezone.now()
+        self.is_public = True
         self.save()
 
     def __str__(self):
