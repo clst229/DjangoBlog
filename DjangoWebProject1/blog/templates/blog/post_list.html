@@ -1,0 +1,16 @@
+{%extends 'blog/base.html'%}
+{%block content %}
+	{% for post in posts %}
+	<div class="post">
+		<h2><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h2>
+		<p class="category">カテゴリー：<a href="{% url 'category_list' pk=post.category.pk %}">{{post.category}}</a></p>
+
+		<p>{{ post.text|linebreaksbr }}</p>
+		<div class="date">
+			<p>公開日：{{post.published_date}}</p>
+		</div>
+		<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{post.approved_comments.count }}</a>
+	</div>
+
+	{% endfor %}
+{% endblock %}

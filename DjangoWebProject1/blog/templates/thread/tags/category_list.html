@@ -1,0 +1,7 @@
+﻿
+<h4>カテゴリー</h4>
+<ul>
+    {% for category in category_list %}
+        <li><a href="{% url 'category_list' pk=category.pk %}">{{ category }}({{category.post_count}})</a></li>
+    {% endfor %}
+</ul>

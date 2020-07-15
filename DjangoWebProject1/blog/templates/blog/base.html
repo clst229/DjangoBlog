@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load app_tags %}
+<html>
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="icon"  href="{% static 'favicon.ico' %}">
+<title>Django blog</title>
+</head>
+<body>
+	<div class="page-header">
+		{% if user.is_authenticated %}
+			<a href="{% url 'post_new' %}" class="top-menu top-icon"><span class="glyphicon glyphicon-plus"></span></a>
+			<a href="{% url 'post_draft_list' %}" class="top-menu top-icon"><span class="glyphicon glyphicon-edit"></span></a>
+			<p class="top-menu">こんにちは、{{user.username}}さん<small>(<a href="{% url 'logout' %}">ログアウト</a>)</small></p>
+		{% else %}
+			<a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span> </a>
+		{% endif %}
+		<h1><a href="/">Django Blog</a></h1>
+	</div>
+	<div class="content container">
+		<div class="row">
+			<div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+			</div>
+			<div class="col-md-2 col-md-offset-2">
+				<h4>サイト内検索</h4>
+				<form action="" method="get">
+				<input class="searchform" name="query"  type="text">
+				<button class = "searchbtn" type="submit" >検索</button>
+				</form>
+
+			 {% render_category_links %}
+			 {% render_month_links %}
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>

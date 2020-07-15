@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+ <h2>New post</h2>
+ <form method="post" class="post-form">{% csrf_token %}
+	 {% for field in form %}
+		<div class="field">
+			{{ field.label_tag }}
+			{{field}}
+		</div>
+	  {% endfor %}
+	<button type="submit" class="save btn btn-default" name="public">“Še</button>
+	<button type="submit" class="save btn btn-default" name="draft">‰º‘‚«•Û‘¶</button>
+
+
+ </form>
+{% endblock %}
