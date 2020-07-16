@@ -3,9 +3,14 @@ from django.utils import timezone
 from .models import Post,Comment,Category,Tag
 from .forms import PostForm,CommentForm
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 from django.views.generic import ListView,DetailView
 from django.views.generic.dates import YearArchiveView
+
 from django.db.models import Q
+
+from functools import reduce
+from operator import and_
 
 # Create your views here.
 #def post_list(request):
@@ -19,9 +24,20 @@ class Post_List(ListView):
     template_name = 'blog/post_list.html'
 
     def get_queryset(self):
+        queryset = Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
         q_word = self.request.GET.get('query')
         if q_word:
-            object_list = Post.objects.filter(is_public=True,created_date__lte=timezone.now()).filter(Q(title__icontains=q_word) | Q(text__icontains=q_word)).order_by('created_date').reverse()
+            exclusion = set([' ','　'])
+            q_list = ''
+            for i in q_word:
+                if i in exclusion:
+                    pass
+                else:
+                    q_list += i
+            query = reduce(
+                and_,[Q(title__icontains=q)|Q(text__icontains=q) for q in q_list]
+                )
+            object_list = queryset.filter(query)
         else:
             object_list =Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
         return object_list
