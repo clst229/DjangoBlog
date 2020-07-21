@@ -60,6 +60,9 @@
     <Content Include="blog\static\img\favicon.ico" />
     <Content Include="blog\templates\blog\add_comment_to_post.html" />
     <Content Include="blog\templates\blog\base.html" />
+    <Content Include="blog\templates\blog\category_form.html" />
+    <Content Include="blog\templates\blog\close.html" />
+    <Content Include="blog\templates\blog\post_archive_month.html" />
     <Content Include="blog\templates\blog\post_detail.html" />
     <Content Include="blog\templates\blog\post_draft_list.html" />
     <Content Include="blog\templates\blog\post_list.html" />

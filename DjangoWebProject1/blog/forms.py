@@ -1,12 +1,11 @@
 from django import forms
 
-from .models import Post,Comment,Category,Tag
-
+from .models import Post,Comment,Category
 class PostForm(forms.ModelForm):
 	
 	class Meta:
 		model = Post
-		fields = ('title','category','tags','text',)
+		fields = ('title','category','text',)
 
 class CommentForm(forms.ModelForm):
 

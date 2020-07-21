@@ -9,13 +9,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class Tag(models.Model):
-    name = models.CharField(max_length=100)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-       return self.name
-
 
 def set_default_category():
     category = Category.objects.get_or_create(name='未設定')
@@ -29,7 +22,6 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.SET_DEFAULT,default=set_default_category)
-    tags = models.ManyToManyField(Tag,blank=True)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(blank=True, null=True)

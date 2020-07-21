@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.utils import timezone
-from .models import Post,Comment,Category,Tag
+from .models import Post,Comment,Category
 from .forms import PostForm,CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.views.generic import ListView,DetailView
-from django.views.generic.dates import YearArchiveView
+from django.urls import reverse_lazy
+from django.views.generic.dates import MonthArchiveView
 
 from django.db.models import Q
 
@@ -141,6 +142,31 @@ def category_list(request,pk):
 #    context_object_name = 'posts'
 #    templete_name = 'blog/post_list.html'
 
+class CategoryCreate(generic.CreateView):
+    model = Category
+    fields = ['name']
+    template_name = 'blog/category_form.html'
+    
+    def get_success_url(self):
+        path = request.path
+        if "edit" in path:
+            return reverse('post_edit',kwargs={'pk':self.object.pk})
+        else:
+            return reverse('post_new')
+
+class PopupCategoryCreate(CategoryCreate):
+
+    def form_valid(self,form):
+        category = form.save()
+        context = {
+            'object_name':str(category),
+            'object_pk':category.pk,
+            'function_name':'add_category'
+            }
+        return render(self.request,'blog/close.html',context)
+
+
+
 class Post_Year_Archive_List(ListView):
     model = Post
     paginate_by = 5
@@ -149,3 +175,10 @@ class Post_Year_Archive_List(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(created_date__lte=timezone.now()).order_by('created_date').reverse()
+
+class PostMonthArchiveView(MonthArchiveView):
+    queryset =Post.objects.all()
+    date_field = "created_date"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()

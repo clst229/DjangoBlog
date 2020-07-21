@@ -2,6 +2,7 @@ from django import template
 from django.utils import timezone
 from ..models import Category,Post
 from django.db.models import Count
+from django.db.models.functions import TruncMonth
 
 register = template.Library()
 
@@ -13,6 +14,7 @@ def render_category_links():
 
 @register.inclusion_tag('thread/tags/month_list.html')
 def render_month_links():
+	month_list = Post.objects.annotate(month=TruncMonth('created_date')).values('month').annotate(count=Count('pk'))
 	return{
-	'month_list': Post.objects.filter(is_public=True,created_date__lte=timezone.now()).dates('created_date', 'month', order='DESC'),
+	'month_list':month_list
 	}

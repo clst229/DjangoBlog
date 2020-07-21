@@ -1,11 +1,11 @@
 ﻿<h4>月別アーカイブ</h4>
-{% regroup month_list by year as dates_by_year %}
+{% regroup month_list by month.year as dates_by_year %}
 <ul>
-    {% for month in dates_by_year %}
-    <li>{{month.grouper}}年
+    {% for group in dates_by_year %}
+    <li>{{group.grouper}}年
         <ul>
-            {% for d in month.list %}
-                <li>{{ d|date:'F' }}</li>
+            {% for d in group.list %}
+                <li><a href="{% url 'archive_month' year=group.grouper month=d.month.month %}">{{ d.month|date:'F' }}({{d.count}})</a></li>
             {% endfor %}
         </ul>
     </li>

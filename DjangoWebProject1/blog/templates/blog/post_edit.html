@@ -3,14 +3,38 @@
 {% block content %}
  <h2>New post</h2>
  <form method="post" class="post-form">{% csrf_token %}
-	 {% for field in form %}
 		<div class="field">
-			{{ field.label_tag }}
-			{{field}}
+			{{ form.title.label_tag}}
+			{{form.title}}
+			{{form.title.errors}}
 		</div>
-	  {% endfor %}
+		<div class="field">
+			{{ form.category.label_tag}}<br />
+			{{form.category}}
+			<a href="javascript:void(0);" onclick="window.open('{% url 'category_create' %}','subwin','width=400,height=200');">+</a>
+		</div>
+
+
+		<div class="field">
+			{{ form.text.label_tag}}
+			{{form.text}}
+			{{form.text.errors}}
+		</div>
+
 	<button type="submit" class="save btn btn-default" name="publish">Publish</button>
 	<button type="submit" class="save btn btn-default" name="draft">Draft</button>
 
  </form>
+ <script>
+	 function add_category(name, pk) {
+		 var select = document.getElementById('id_category');
+		 var option = document.createElement('option');
+		 option.setAttribute('value', pk);
+		 option.innerHTML = name;
+
+		 select.add(option, 0);
+		 select.options[0].selected = true;
+	 }
+
+ </script>
 {% endblock %}
