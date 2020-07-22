@@ -13,7 +13,7 @@ urlpatterns = [
     path('post/<int:pk>/comment/',views.add_comment_to_post,name='add_comment_to_post'),
     path('comment/<int:pk>/approve',views.comment_approve,name='comment_approve'),
     path('comment/<int:pk>/remove',views.comment_remove,name='comment_remove'),
-    path('category/<int:pk>/',views.category_list,name='category_list'),
+    path('category/<int:pk>/',views.Category_List.as_view(),name='category_list'),
     path('category_create/',views.PopupCategoryCreate.as_view(),name='category_create'),
     path('year/<int:year>/',views.Post_Year_Archive_List.as_view(),name='month_list'),
     path('<int:year>/<int:month>/',views.PostMonthArchiveView.as_view(month_format='%m'),name="archive_month"),

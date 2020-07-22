@@ -62,11 +62,11 @@
     <Content Include="blog\templates\blog\base.html" />
     <Content Include="blog\templates\blog\category_form.html" />
     <Content Include="blog\templates\blog\close.html" />
-    <Content Include="blog\templates\blog\post_archive_month.html" />
     <Content Include="blog\templates\blog\post_detail.html" />
     <Content Include="blog\templates\blog\post_draft_list.html" />
     <Content Include="blog\templates\blog\post_list.html" />
     <Content Include="blog\templates\blog\post_edit.html" />
+    <Content Include="blog\templates\blog\includes\pagenation.html" />
     <Content Include="blog\templates\registration\login.html" />
     <Content Include="blog\templates\thread\tags\month_list.html" />
     <Content Include="blog\templates\thread\tags\category_list.html" />
@@ -84,6 +84,7 @@
   <ItemGroup>
     <Folder Include="blog\" />
     <Folder Include="blog\static\img\" />
+    <Folder Include="blog\templates\blog\includes\" />
     <Folder Include="blog\templates\thread\" />
     <Folder Include="blog\templates\thread\tags\" />
     <Folder Include="blog\templatetags\" />

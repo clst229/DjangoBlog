@@ -21,7 +21,7 @@ from operator import and_
 class Post_List(ListView):
     model = Post
     paginate_by = 5
-    context_object_name = 'posts'
+    #context_object_name = 'posts'
     template_name = 'blog/post_list.html'
 
     def get_queryset(self):
@@ -131,16 +131,28 @@ def comment_remove(request,pk):
     comment.delete()
     return redirect('post_detail',pk=comment.post.pk)
 
-def category_list(request,pk):
-    category = get_object_or_404(Category,pk=pk)
-    posts =  Post.objects.filter(category=category,created_date__lte=timezone.now(),is_public=True).order_by('created_date').reverse()
-    return render(request, 'blog/post_list.html', {'posts':posts}) 
+#def category_list(request,pk):
+#    category = get_object_or_404(Category,pk=pk)
+#    posts =  Post.objects.filter(category=category,created_date__lte=timezone.now(),is_public=True).order_by('created_date').reverse()
+#    return render(request, 'blog/post_list.html', {'posts':posts}) 
 
-#class Category_List(ListView):
-#    model = Category
-#    paginate_by = 5
-#    context_object_name = 'posts'
-#    templete_name = 'blog/post_list.html'
+class Category_List(ListView):
+    model = Post
+    paginate_by = 5
+    #context_object_name = 'posts'
+    templete_name = 'blog/post_list.html'
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        category = get_object_or_404(Category,pk=pk)
+        return Post.objects.filter(category=category,created_date__lte=timezone.now(),is_public=True).order_by('created_date').reverse()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get('pk')
+        category = get_object_or_404(Category,pk=pk)
+        context['category_name'] = str(category)
+        return context
 
 class CategoryCreate(generic.CreateView):
     model = Category
@@ -169,8 +181,7 @@ class PopupCategoryCreate(CategoryCreate):
 
 class Post_Year_Archive_List(ListView):
     model = Post
-    paginate_by = 5
-    context_object_name = 'posts'
+    #context_object_name = 'posts'
     template_name = 'blog/post_list.html'
 
     def get_queryset(self):
@@ -178,7 +189,10 @@ class Post_Year_Archive_List(ListView):
 
 class PostMonthArchiveView(MonthArchiveView):
     queryset =Post.objects.all()
+    paginate_by = 5
     date_field = "created_date"
+    template_name = 'blog/post_list.html'
 
     def get_queryset(self):
         return super().get_queryset().filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
+

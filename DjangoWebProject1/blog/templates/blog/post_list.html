@@ -1,6 +1,16 @@
 {%extends 'blog/base.html'%}
+{% load static %}
+
 {%block content %}
-	{% for post in posts %}
+	{% if category_name %}
+	<h2>カテゴリ：{{category_name}}の記事</h2>
+	<hr />
+	{% endif %}
+	{% if month %}
+	<h2>{{month | date:"Y年m月"}}の記事</h2>
+	<hr />
+	{% endif %}
+	{% for post in object_list %}
 	<div class="post">
 		<h2><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h2>
 		<p class="category">カテゴリー：<a href="{% url 'category_list' pk=post.category.pk %}">{{post.category}}</a></p>
@@ -13,4 +23,7 @@
 	</div>
 
 	{% endfor %}
+
+{% include 'blog/includes/pagenation.html' %}
+
 {% endblock %}
