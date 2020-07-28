@@ -1,7 +1,8 @@
-﻿
-<h4>カテゴリー</h4>
-<ul>
-    {% for category in category_list %}
-        <li><a href="{% url 'category_list' pk=category.pk %}">{{ category }}({{category.post_count}})</a></li>
-    {% endfor %}
-</ul>
+﻿<div class="panel panel-default">
+    <div class="panel-heading">カテゴリー</div>
+        <ul class="list-group">
+        {% for category in category_list %}
+            <li class="list-group-item"><a href="{% url 'category_list' pk=category.pk %}">{{ category }}<span class="badge">{{category.post_count}}</span></a></li>
+        {% endfor %}
+        </ul>
+</div>

@@ -7,13 +7,11 @@ from django.views import generic
 from django.views.generic import ListView,DetailView
 from django.urls import reverse_lazy
 from django.views.generic.dates import MonthArchiveView
-
 from django.db.models import Q
-
 from functools import reduce
 from operator import and_
 
-# Create your views here.
+
 #def post_list(request):
 #    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
 #    return render(request, 'blog/post_list.html', {'posts':posts})
@@ -25,8 +23,21 @@ class Post_List(ListView):
     template_name = 'blog/post_list.html'
 
     def get_queryset(self):
+        return Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
+
+#def post_detail(request, pk):
+#    post = get_object_or_404(Post,pk=pk)
+#    return render(request,'blog/post_detail.html',{'post':post})
+
+class Search_List(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    paginate_by = 5
+
+    def get_queryset(self):
         queryset = Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
-        q_word = self.request.GET.get('query')
+        object_list = queryset
+        q_word = self.request.GET.get('query',None)
         if q_word:
             exclusion = set([' ','　'])
             q_list = ''
@@ -35,17 +46,21 @@ class Post_List(ListView):
                     pass
                 else:
                     q_list += i
-            query = reduce(
-                and_,[Q(title__icontains=q)|Q(text__icontains=q) for q in q_list]
-                )
-            object_list = queryset.filter(query)
-        else:
-            object_list =Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
+            if q_list:
+                query = reduce(
+                    and_,[Q(title__icontains=q)|Q(text__icontains=q) for q in q_list]
+                    )
+                object_list = queryset.filter(query)
+            
         return object_list
 
-#def post_detail(request, pk):
-#    post = get_object_or_404(Post,pk=pk)
-#    return render(request,'blog/post_detail.html',{'post':post})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('query')
+        if query:
+            context['query'] = query
+        return context
+
 
 class Post_Detail(DetailView):
     template_name = 'blog/post_detail.html'

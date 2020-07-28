@@ -4,19 +4,19 @@
  <h2>New post</h2>
  <form method="post" class="post-form">{% csrf_token %}
 		<div class="field">
-			{{ form.title.label_tag}}
+			{{form.title.label_tag}}
 			{{form.title}}
 			{{form.title.errors}}
 		</div>
 		<div class="field">
-			{{ form.category.label_tag}}<br />
+			{{form.category.label_tag}}<br />
 			{{form.category}}
 			<a href="javascript:void(0);" onclick="window.open('{% url 'category_create' %}','subwin','width=400,height=200');">+</a>
 		</div>
 
 
 		<div class="field">
-			{{ form.text.label_tag}}
+			{{form.text.label_tag}}
 			{{form.text}}
 			{{form.text.errors}}
 		</div>

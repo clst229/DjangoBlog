@@ -38,6 +38,9 @@ class Post(models.Model):
     
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
+    
+    def count_unnapproved_comment(self):
+        return self.comments.filter(approved_comment=False).count()
 
 
 class Comment(models.Model):

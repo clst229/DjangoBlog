@@ -17,4 +17,5 @@ urlpatterns = [
     path('category_create/',views.PopupCategoryCreate.as_view(),name='category_create'),
     path('year/<int:year>/',views.Post_Year_Archive_List.as_view(),name='month_list'),
     path('<int:year>/<int:month>/',views.PostMonthArchiveView.as_view(month_format='%m'),name="archive_month"),
+    path('search_result/',views.Search_List.as_view(),name='search_list'),
     ]

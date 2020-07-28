@@ -1,13 +1,19 @@
-﻿<h4>月別アーカイブ</h4>
 {% regroup month_list by month.year as dates_by_year %}
-<ul>
+<div class="panel panel-default">
+        <div class="panel-heading">月別アーカイブ</div>
     {% for group in dates_by_year %}
-    <li>{{group.grouper}}年
-        <ul>
-            {% for d in group.list %}
-                <li><a href="{% url 'archive_month' year=group.grouper month=d.month.month %}">{{ d.month|date:'F' }}({{d.count}})</a></li>
-            {% endfor %}
-        </ul>
-    </li>
+        <div class="panel-heading">
+        <a data-toggle="collapse" href="#collapseListGroup{{group.grouper}}">
+        {{group.grouper}}年
+        </a>
+        </div>
+        <div id="collapseListGroup{{group.grouper}}" class="panel-collapse collapse">
+            <ul class="list-group">
+                {% for d in group.list %}
+                    <li class="list-group-item"><a href="{% url 'archive_month' year=group.grouper month=d.month.month %}">{{ d.month|date:'F' }}<span class="badge">{{d.count}}</span></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
     {% endfor %}
-</ul>
+</div>

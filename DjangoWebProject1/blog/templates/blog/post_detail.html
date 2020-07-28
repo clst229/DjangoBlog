@@ -28,12 +28,19 @@
 				<p>{{comment.text|linebreaks}}</p>
 				<div class="date">{{comment.created_date}}
 				{% if not comment.approved_comment %}
+					<small>未承認のコメント</small>
 					<a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span> </a>
 					<a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span> </a>					
 				{% endif %}
 				</div>
 			</div>
+		{% else %}
+			<div class="comment">
+				<p>このコメントは承認待ちです</p>
+				<div class="date">{{comment.created_date}}</div>
+			</div>
 		{% endif %}
+		
 		{% empty %}
 			<p>No comments here yet :(</p>
 
