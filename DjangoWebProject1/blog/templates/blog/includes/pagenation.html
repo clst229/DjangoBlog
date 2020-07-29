@@ -4,22 +4,22 @@
     <ul class="pagination">
         {% if page_obj.has_previous %}
         <li>
-            <a href="?page={{ page_obj.previous_page_number }}">
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
             <span aria-hidden="true"><<</span></a>
         </li>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
-                <li class="active"><a href="?page={{ num }}">{{num}}</a></li>
+                <li class="active"><a href="?page={{ num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{num}}</a></li>
             {% else %}
-                <li><a href="?page={{ num }}">{{num}}</a></li>
+                <li><a href="?page={{ num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{num}}</a></li>
             {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
         <li>
-            <a href="?page={{ page_obj.next_page_number }}">
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
             <span aria-hidden="true">>></span></a>
         </li>            
         {% endif %}

@@ -9,7 +9,8 @@
 			{{form.title.errors}}
 		</div>
 		<div class="field">
-			{{form.category.label_tag}}<br />
+			{{form.category.label_tag}}
+			<br />
 			{{form.category}}
 			<a href="javascript:void(0);" onclick="window.open('{% url 'category_create' %}','subwin','width=400,height=200');">+</a>
 		</div>
@@ -21,7 +22,7 @@
 			{{form.text.errors}}
 		</div>
 
-	<button type="submit" class="save btn btn-default" name="publish">Publish</button>
+	<button type="submit" class="save btn btn-primary" name="publish" style="margin-left:10px;">Publish</button>
 	<button type="submit" class="save btn btn-default" name="draft">Draft</button>
 
  </form>

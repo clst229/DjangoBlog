@@ -33,6 +33,7 @@
             {% endblock %}
 			</div>
 			<div class="col-md-2 col-md-offset-2">
+			{% if not form %}
 				<div class="panel panel-default">
 					<div class="panel-heading">サイト内検索</div>
 					<div class="panel-body">
@@ -45,6 +46,8 @@
 
 			 {% render_category_links %}
 			 {% render_month_links %}
+			{% endif %}
+			
 			</div>
 		</div>
 
