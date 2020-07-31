@@ -1,21 +1,17 @@
 .page-header {
-    background-color: #C25100;
+    background-color: #8100c2;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
 
  .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-        color: #ffffff;
-        font-size: 36pt;
-        text-decoration: none;
-        margin-top: 0;
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+    margin-top: 0;
     }
 
  
- *{
-     margin:0px;
-     padding:0px;
- }
 
 .content {
     margin-left: 40px;
@@ -41,9 +37,8 @@
     margin-right: 20px;
 }
 
- .top-menu.top-icon
- {
-        font-size: 26pt;
+ .top-menu.top-icon{
+    font-size: 26pt;
  }
 
 .post {
@@ -51,8 +46,8 @@
 }
 
  .post h2 a, .post h2 a:visited {
-        color: #000000;
-    }
+    color: #000000;
+ }
  .comment{
      margin: 20px 0px 20px 20px;
  }
@@ -67,7 +62,7 @@
  }
 
 .save btn btn-default{
-    margin-top:20px;
+    margin:20px;
 }
 .category {
     font-size: 12px;

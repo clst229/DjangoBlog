@@ -46,15 +46,16 @@ class Search_List(ListView):
     def get_queryset(self):
         queryset = Post.objects.filter(is_public=True,created_date__lte=timezone.now()).order_by('created_date').reverse()
         object_list = queryset
-        q_word = self.request.GET.get('query',None)
+        q_word = self.request.GET.get('query','')
         if q_word:
-            exclusion = set([' ','　'])
-            q_list = ''
-            for i in q_word:
-                if i in exclusion:
-                    pass
-                else:
-                    q_list += i
+            q_list = q_word.replace(' ','　').split()
+            #exclusion = set([' ','　'])
+            #q_list = ''
+            #for i in q_word:
+            #    if i in exclusion:
+            #        pass
+            #    else:
+            #        q_list += i
             if q_list:
                 query = reduce(
                     and_,[Q(title__icontains=q)|Q(text__icontains=q) for q in q_list]
@@ -159,13 +160,13 @@ class Post_Edit(LoginRequiredMixin,UpdateView):
 #下書き一覧（Class-Based Views）
 class Post_Draft_List(LoginRequiredMixin,ListView):
     model = Post
-    template_name = 'blog/post_list.html'
+    template_name = 'blog/post_draft_list.html'
     paginate_by = 5
 
     def get_queryset(self):
         return Post.objects.filter(is_public = False).order_by('created_date').reverse()
 
-#記事投稿
+#記事公開
 @login_required
 def post_publish(request,pk):
     post = get_object_or_404(Post,pk=pk)
@@ -273,14 +274,14 @@ class PopupCategoryCreate(CategoryCreate):
             }
         return render(self.request,'blog/close.html',context)
 
-#年別記事一覧
-class Post_Year_Archive_List(ListView):
-    model = Post
-    #context_object_name = 'posts'
-    template_name = 'blog/post_list.html'
+##年別記事一覧
+#class Post_Year_Archive_List(ListView):
+#    model = Post
+#    #context_object_name = 'posts'
+#    template_name = 'blog/post_list.html'
 
-    def get_queryset(self):
-        return Post.objects.filter(created_date__lte=timezone.now()).order_by('created_date').reverse()
+#    def get_queryset(self):
+#        return Post.objects.filter(created_date__lte=timezone.now()).order_by('created_date').reverse()
 
 #月別記事一覧
 class Post_Month_Archive_View(MonthArchiveView):

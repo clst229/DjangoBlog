@@ -1,0 +1,15 @@
+﻿{% load app_tags %}
+
+{% if not form %}
+	<div class="panel panel-default">
+		<div class="panel-heading">サイト内検索</div>
+		<div class="panel-body">
+			<form action="{% url 'search_list' %}" method="get">
+			<input class="form-control" name="query" type="text" >
+			<button class = "btn btn-default" type="submit" >検索</button>					
+			</form>
+		</div>
+	</div>
+ {% render_category_links %}
+ {% render_month_links %}
+{% endif %}

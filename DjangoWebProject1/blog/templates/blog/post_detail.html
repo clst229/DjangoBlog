@@ -6,8 +6,7 @@
 		<p class="category">カテゴリー：<a href="{% url 'category_list' pk=post.category.pk %}">{{post.category}}</a></p>
 		<p>{{ post.text|linebreaksbr }}</p>
 		<div class="date">
-			<p>
-				作成日：{{post.created_date}}</p>
+			<p>作成日：{{post.created_date}}</p>
 			{% if post.is_public == False %}
 				<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
 			{% endif %}

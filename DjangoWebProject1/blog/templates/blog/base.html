@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-<link rel="icon"  href="{% static 'favicon.ico' %}">
+<link rel="icon" type="image/png"  href="{% static 'img/favicon.png' %}">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -28,32 +28,18 @@
 	</div>
 	<div class="content container">
 		<div class="row">
+
 			<div class="col-md-8">
             {% block content %}
             {% endblock %}
 			</div>
-			<div class="col-md-2 col-md-offset-2">
-			{% if not form %}
-				<div class="panel panel-default">
-					<div class="panel-heading">サイト内検索</div>
-					<div class="panel-body">
-						<form action="{% url 'search_list' %}" method="get">
-						<input class="form-control" name="query" type="text" >
-						<button class = "btn btn-default" type="submit" >検索</button>					
-						</form>
-					</div>
-				</div>
 
-			 {% render_category_links %}
-			 {% render_month_links %}
-			{% endif %}
+			<div class="col-md-2 col-md-offset-2">
+			{% include 'blog/includes/sidebar.html' %}
 			
 			</div>
 		</div>
-
 	</div>
-
-
 
 </body>
 </html>
