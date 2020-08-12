@@ -96,6 +96,10 @@ class Post_New(LoginRequiredMixin,CreateView):
     form_class = PostForm
     template_name = 'blog/post_edit.html'
 
+    def post(self, request, *args, **kwargs):
+        form= PostForm(request.POST)
+        return super().post(request, *args, **kwargs)
+
     def form_valid(self, form):
       post = form.save(commit=False)
       post.author = self.request.user
@@ -135,6 +139,10 @@ class Post_Edit(LoginRequiredMixin,UpdateView):
     form_class = PostForm
     template_name = 'blog/post_edit.html'
     model = Post
+
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST,instance=post)
+        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
          post = form.save(commit=False)

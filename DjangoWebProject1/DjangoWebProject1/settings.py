@@ -27,6 +27,22 @@ SECRET_KEY = 'c1a39c78-0f7a-4d79-b132-ead878c2a0b4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
 ALLOWED_HOSTS = []
 
 # Application references
@@ -55,6 +71,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DjangoWebProject1.urls'
+
+# セッションの設定
+SESSION_COOKIE_AGE = 600 # 10分
+SESSION_SAVE_EVERY_REQUEST = True # 1リクエストごとにセッション情報を更新
 
 # Template configuration
 # https://docs.djangoproject.com/en/2.1/topics/templates/
@@ -118,3 +138,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+
