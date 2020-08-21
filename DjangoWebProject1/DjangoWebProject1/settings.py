@@ -43,7 +43,7 @@ LOGGING = {
         },
     },
 }
-ALLOWED_HOSTS = ['192.168.75.128','192.168.42.208','localhost']
+ALLOWED_HOSTS = ['192.168.75.128','192.168.42.208']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
