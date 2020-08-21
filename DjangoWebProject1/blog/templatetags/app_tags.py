@@ -15,5 +15,5 @@ def render_category_links():
 @register.inclusion_tag('thread/tags/month_list.html')
 def render_month_links(): 
 	return{
-	'month_list':Post.objects.filter(is_public=True).annotate(month=TruncMonth('created_date')).values('month').annotate(count=Count('pk'))
+	'month_list':Post.objects.filter(is_public=True).annotate(month=TruncMonth('created_date')).values('month').annotate(count=Count('pk')).order_by('month')
 	}
