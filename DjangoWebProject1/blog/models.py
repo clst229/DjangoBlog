@@ -1,9 +1,12 @@
 from django.conf import settings
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.db import models
 from django.utils import timezone
 
 class Category(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=15,
+                            validators=[MaxLengthValidator(15,'15文字以内で入力してください')],
+                            unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -20,7 +23,8 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=30,
+                             validators=[MaxLengthValidator(30,'30文字以内で入力してください')])
     category = models.ForeignKey(Category,on_delete=models.SET_DEFAULT,default=set_default_category)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
